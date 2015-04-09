@@ -3,7 +3,7 @@ Microcontroller for Final Design Project
 
 The requirements for the microcontroller are listed below.
 Memory
-	The microcontroller shall be Von Neumann architecture.
+	The microcontroller shall be Von Neumann architecture.<br /> <br /><br />
 	The microcontroller shall have 255 4-bit memory locations.
 	The program will be input by initializing memory locations (i.e., program shall be uploaded in software, not in hardware).
 	Operation
