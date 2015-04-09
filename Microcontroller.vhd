@@ -22,7 +22,10 @@ architecture Microcontroller_arch of Microcontroller is
 	signal mem : storage; --Actual memory bank; use this when working with memory
 	signal address_sel : std_logic_vector(7 downto 0); --used to select memory address
 	
-	constant status: integer := 255; --status register. Located in memory bank.
+	constant status: integer := 255; -- status register. THIS IS AN INTEGER. If you want to access
+					 -- the status register, write mem(status).
+	
+	-- A-G values of 7-segment LEDs
 	constant LED_0 : std_logic_vector(6 downto 0) := "1111110";
 	constant LED_1 : std_logic_vector(6 downto 0) := "0110000";
 	constant LED_2 : std_logic_vector(6 downto 0) := "1101101";
@@ -56,6 +59,7 @@ architecture Microcontroller_arch of Microcontroller is
 		 return result;
 		 end;
 		 
+	--converts std_logic_vector to int	 
 	function Conv_to_Int (vec : std_logic_vector; size : integer)
 		return integer is
 		variable temp : integer := 1;
@@ -77,9 +81,10 @@ architecture Microcontroller_arch of Microcontroller is
 	--Selects whether device is in debug mode or normal and sets internal clock signal
 	clock <= (debug_clock AND debug_enable) or (not debug_enable and onboard_clock);
 	
-	--Resets microcontroller
+	
 		process (clock, reset)
 	begin
+		--resets microcontroller
 		if(reset = '1') then
 			accumulator <= "0000";
 			Program_counter <= 0;
