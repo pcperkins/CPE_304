@@ -1,5 +1,5 @@
 # CPE_304
-Microcontroller for Final Design Project
+<strong>Microcontroller for Final Design Project</strong>
 
 The requirements for the microcontroller are listed below. <br /><br />
 <i>Memory</i><br />
