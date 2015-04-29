@@ -21,8 +21,6 @@ architecture Microcontroller_arch of Microcontroller is
 	type storage is array(255 downto 0) of std_logic_vector(3 downto 0); --declaration of memory bank (not instantiated)
 	signal mem : storage; --Actual memory bank; use this when working with memory
 	signal address_sel : std_logic_vector(7 downto 0); --used to select memory address
-	signal Carry_bit : bit := '0'; 
-	signal Zero_bit : bit := '0'; 
 	
 	constant status: integer := 255; -- status register. THIS IS AN INTEGER. If you want to access
 					 -- the status register, write mem(status).
@@ -79,7 +77,7 @@ architecture Microcontroller_arch of Microcontroller is
 			return result;
 		end Conv_to_Int;
 		
-	function JMPCS (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+	function JMPCS (C : std_logic; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
 		return integer is
 		variable PC : integer := prgm_count;
 		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
@@ -92,7 +90,7 @@ architecture Microcontroller_arch of Microcontroller is
 			return PC;
 	end JMPCS;
 	
-	function JMPCC (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+	function JMPCC (C : std_logic; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
 		return integer is
 		variable PC : integer := prgm_count;
 		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
@@ -105,26 +103,26 @@ architecture Microcontroller_arch of Microcontroller is
 			return PC;
 	end JMPCC;
 	
-	function JMPZS (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+	function JMPZS (Z : std_logic; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
 		return integer is
 		variable PC : integer := prgm_count;
 		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
 		begin
 		
-			case C is
+			case Z is
 				when '0' => PC := PC + 3;
 				when '1' => PC := Conv_to_Int(Address, 8);
 			end case;
 			return PC;
 	end JMPZS;
 	
-	function JMPZC (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+	function JMPZC (Z : std_logic; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
 		return integer is
 		variable PC : integer := prgm_count;
 		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
 		begin
 		
-			case C is
+			case Z is
 				when '1' => PC := PC + 3;
 				when '0' => PC := Conv_to_Int(Address, 8);
 			end case;
@@ -154,16 +152,16 @@ architecture Microcontroller_arch of Microcontroller is
 			
 			when "1001"
 			=> Program_counter 
-			<= JMPCS(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			<= JMPCS(mem(Status)(1), Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
 			when "1010"
 			=> Program_counter 
-			<= JMPCC(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			<= JMPCC(mem(Status)(1), Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
 			when "1011"
 			=> Program_counter 
-			<= JMPZS(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			<= JMPZS(mem(Status)(0), Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
 			when "1100"
 			=> Program_counter 
-			<= JMPZC(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			<= JMPZC(mem(Status)(0), Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
 			
 			--Here's where you guys come in. replace [opcode] with the value of your opcode, e.g. "0000" if writing NOP
 
