@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Microcontroller
-Wed Apr 29 13:30:54 2015
+Wed Apr 29 13:41:05 2015
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -43,7 +43,7 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Apr 29 13:30:54 2015           ;
+; Analysis & Synthesis Status        ; Successful - Wed Apr 29 13:41:05 2015           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; Microcontroller                                 ;
 ; Top-level Entity Name              ; Microcontroller                                 ;
@@ -258,7 +258,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Wed Apr 29 13:30:49 2015
+    Info: Processing started: Wed Apr 29 13:41:01 2015
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Microcontroller -c Microcontroller
 Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 2 design units, including 1 entities, in source file microcontroller.vhd
@@ -266,26 +266,28 @@ Info (12021): Found 2 design units, including 1 entities, in source file microco
     Info (12023): Found entity 1: Microcontroller
 Info (12127): Elaborating entity "Microcontroller" for the top level hierarchy
 Warning (10540): VHDL Signal Declaration warning at Microcontroller.vhd(24): used explicit default value for signal "Carry_bit" because signal was never assigned a value
-Warning (10542): VHDL Variable Declaration warning at Microcontroller.vhd(84): used initial value expression for variable "Address" because variable was never assigned a value
-Warning (10542): VHDL Variable Declaration warning at Microcontroller.vhd(97): used initial value expression for variable "Address" because variable was never assigned a value
-Warning (10631): VHDL Process Statement warning at Microcontroller.vhd(112): inferring latch(es) for signal or variable "Accumulator", which holds its previous value in one or more paths through the process
-Warning (10631): VHDL Process Statement warning at Microcontroller.vhd(112): inferring latch(es) for signal or variable "data_out", which holds its previous value in one or more paths through the process
-Warning (10631): VHDL Process Statement warning at Microcontroller.vhd(112): inferring latch(es) for signal or variable "mem", which holds its previous value in one or more paths through the process
-Warning (10492): VHDL Process Statement warning at Microcontroller.vhd(173): signal "Program_counter" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at Microcontroller.vhd(209): signal "Program_counter" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10542): VHDL Variable Declaration warning at Microcontroller.vhd(85): used initial value expression for variable "Address" because variable was never assigned a value
+Warning (10542): VHDL Variable Declaration warning at Microcontroller.vhd(98): used initial value expression for variable "Address" because variable was never assigned a value
+Warning (10542): VHDL Variable Declaration warning at Microcontroller.vhd(111): used initial value expression for variable "Address" because variable was never assigned a value
+Warning (10542): VHDL Variable Declaration warning at Microcontroller.vhd(124): used initial value expression for variable "Address" because variable was never assigned a value
+Warning (10631): VHDL Process Statement warning at Microcontroller.vhd(139): inferring latch(es) for signal or variable "Accumulator", which holds its previous value in one or more paths through the process
+Warning (10631): VHDL Process Statement warning at Microcontroller.vhd(139): inferring latch(es) for signal or variable "data_out", which holds its previous value in one or more paths through the process
+Warning (10631): VHDL Process Statement warning at Microcontroller.vhd(139): inferring latch(es) for signal or variable "mem", which holds its previous value in one or more paths through the process
+Warning (10492): VHDL Process Statement warning at Microcontroller.vhd(206): signal "Program_counter" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at Microcontroller.vhd(242): signal "Program_counter" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
 Warning (10873): Using initial value X (don't care) for net "mem[254..0]" at Microcontroller.vhd(22)
-Info (10041): Inferred latch for "mem[255][0]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "mem[255][1]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "mem[255][2]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "mem[255][3]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "data_out[0]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "data_out[1]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "data_out[2]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "data_out[3]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "Accumulator[0]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "Accumulator[1]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "Accumulator[2]" at Microcontroller.vhd(112)
-Info (10041): Inferred latch for "Accumulator[3]" at Microcontroller.vhd(112)
+Info (10041): Inferred latch for "mem[255][0]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "mem[255][1]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "mem[255][2]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "mem[255][3]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "data_out[0]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "data_out[1]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "data_out[2]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "data_out[3]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "Accumulator[0]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "Accumulator[1]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "Accumulator[2]" at Microcontroller.vhd(139)
+Info (10041): Inferred latch for "Accumulator[3]" at Microcontroller.vhd(139)
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "data_out[0]" is stuck at GND
     Warning (13410): Pin "data_out[1]" is stuck at GND
@@ -325,10 +327,10 @@ Warning (21074): Design contains 8 input pin(s) that do not drive logic
 Info (21057): Implemented 32 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 8 input pins
     Info (21059): Implemented 24 output pins
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 44 warnings
-    Info: Peak virtual memory: 496 megabytes
-    Info: Processing ended: Wed Apr 29 13:30:54 2015
-    Info: Elapsed time: 00:00:05
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 46 warnings
+    Info: Peak virtual memory: 507 megabytes
+    Info: Processing ended: Wed Apr 29 13:41:05 2015
+    Info: Elapsed time: 00:00:04
     Info: Total CPU time (on all processors): 00:00:04
 
 

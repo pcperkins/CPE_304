@@ -22,6 +22,7 @@ architecture Microcontroller_arch of Microcontroller is
 	signal mem : storage; --Actual memory bank; use this when working with memory
 	signal address_sel : std_logic_vector(7 downto 0); --used to select memory address
 	signal Carry_bit : bit := '0'; 
+	signal Zero_bit : bit := '0'; 
 	
 	constant status: integer := 255; -- status register. THIS IS AN INTEGER. If you want to access
 					 -- the status register, write mem(status).
@@ -104,6 +105,32 @@ architecture Microcontroller_arch of Microcontroller is
 			return PC;
 	end JMPCC;
 	
+	function JMPZS (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+		return integer is
+		variable PC : integer := prgm_count;
+		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
+		begin
+		
+			case C is
+				when '0' => PC := PC + 3;
+				when '1' => PC := Conv_to_Int(Address, 8);
+			end case;
+			return PC;
+	end JMPZS;
+	
+	function JMPZC (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+		return integer is
+		variable PC : integer := prgm_count;
+		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
+		begin
+		
+			case C is
+				when '1' => PC := PC + 3;
+				when '0' => PC := Conv_to_Int(Address, 8);
+			end case;
+			return PC;
+	end JMPZC;
+	
 	begin
 	--Selects whether device is in debug mode or normal and sets internal clock signal
 	clock <= (debug_clock AND debug_enable) or (not debug_enable and onboard_clock);
@@ -131,6 +158,12 @@ architecture Microcontroller_arch of Microcontroller is
 			when "1010"
 			=> Program_counter 
 			<= JMPCC(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			when "1011"
+			=> Program_counter 
+			<= JMPZS(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			when "1100"
+			=> Program_counter 
+			<= JMPZC(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
 			
 			--Here's where you guys come in. replace [opcode] with the value of your opcode, e.g. "0000" if writing NOP
 
