@@ -78,7 +78,7 @@ architecture Microcontroller_arch of Microcontroller is
 			return result;
 		end Conv_to_Int;
 		
-		function JMPCS (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+	function JMPCS (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
 		return integer is
 		variable PC : integer := prgm_count;
 		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
@@ -89,7 +89,20 @@ architecture Microcontroller_arch of Microcontroller is
 				when '1' => PC := Conv_to_Int(Address, 8);
 			end case;
 			return PC;
-		end JMPCS;
+	end JMPCS;
+	
+	function JMPCC (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+		return integer is
+		variable PC : integer := prgm_count;
+		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
+		begin
+		
+			case C is
+				when '1' => PC := PC + 3;
+				when '0' => PC := Conv_to_Int(Address, 8);
+			end case;
+			return PC;
+	end JMPCC;
 	
 	begin
 	--Selects whether device is in debug mode or normal and sets internal clock signal
@@ -110,7 +123,16 @@ architecture Microcontroller_arch of Microcontroller is
 		
 			instruction_register <= mem(Program_counter); --Moves the current PC to the instruction register
 
-		--Here's where you guys come in. replace [opcode] with the value of your opcode, e.g. "0000" if writing NOP
+			case instruction_register is --selects which opcode to run
+			
+			when "1001"
+			=> Program_counter 
+			<= JMPCS(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			when "1010"
+			=> Program_counter 
+			<= JMPCC(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			
+			--Here's where you guys come in. replace [opcode] with the value of your opcode, e.g. "0000" if writing NOP
 
 			--when [opcode]
 			--[call relevant function]
@@ -128,11 +150,6 @@ architecture Microcontroller_arch of Microcontroller is
 			--[call relevant function]
 			--[end function]
 			--Update Program Counter
-			
-			case instruction_register is --selects which opcode to run
-			
-			when "1001"
-			=> Program_counter <= JMPCS(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
 			when others => null; 
 			
 			
