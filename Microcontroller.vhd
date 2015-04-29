@@ -21,6 +21,7 @@ architecture Microcontroller_arch of Microcontroller is
 	type storage is array(255 downto 0) of std_logic_vector(3 downto 0); --declaration of memory bank (not instantiated)
 	signal mem : storage; --Actual memory bank; use this when working with memory
 	signal address_sel : std_logic_vector(7 downto 0); --used to select memory address
+	signal Carry_bit : bit := '0'; 
 	
 	constant status: integer := 255; -- status register. THIS IS AN INTEGER. If you want to access
 					 -- the status register, write mem(status).
@@ -57,7 +58,7 @@ architecture Microcontroller_arch of Microcontroller is
 				temp := temp /2;
 			end loop;
 		 return result;
-		 end;
+		 end Conv_To_Std;
 		 
 	--converts std_logic_vector to int	 
 	function Conv_to_Int (vec : std_logic_vector; size : integer)
@@ -75,7 +76,20 @@ architecture Microcontroller_arch of Microcontroller is
 				temp := temp * 2;
 				end loop;
 			return result;
-		end;	
+		end Conv_to_Int;
+		
+		function JMPCS (C : bit; prgm_count: integer; HI, LO : std_logic_vector(3 downto 0)) 
+		return integer is
+		variable PC : integer := prgm_count;
+		variable Address : std_logic_vector(7 downto 0) := Hi & LO;
+		begin
+		
+			case C is
+				when '0' => PC := PC + 3;
+				when '1' => PC := Conv_to_Int(Address, 8);
+			end case;
+			return PC;
+		end JMPCS;
 	
 	begin
 	--Selects whether device is in debug mode or normal and sets internal clock signal
@@ -98,9 +112,6 @@ architecture Microcontroller_arch of Microcontroller is
 
 		--Here's where you guys come in. replace [opcode] with the value of your opcode, e.g. "0000" if writing NOP
 
-			
-			--case instruction_register is --selects which opcode to run
-			
 			--when [opcode]
 			--[call relevant function]
 			--[end function]
@@ -118,7 +129,15 @@ architecture Microcontroller_arch of Microcontroller is
 			--[end function]
 			--Update Program Counter
 			
-			--end case
+			case instruction_register is --selects which opcode to run
+			
+			when "1001"
+			=> Program_counter <= JMPCS(Carry_bit, Program_Counter, mem(Program_Counter + 1), mem(Program_Counter + 2));
+			when others => null; 
+			
+			
+			
+			end case;
 		end if;
 	end process;
 	
